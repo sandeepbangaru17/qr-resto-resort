@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+}
+
+/* HEADER */
+header {
+    background: #27ae60;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+/* CONTAINER */
+.container {
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* SUMMARY */
+.summary {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.summary p {
+    margin: 8px 0;
+}
+
+/* BUTTON */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: #27ae60;
+}
+
+.btn-cancel {
+    background: #777;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>💳 Payment</h1>
+    <p>Secure Payment</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Booking Summary</h2>
+
+        <div class="summary">
+            <p><strong>Service:</strong> Restaurant / Resort</p>
+            <p><strong>Name:</strong> Customer Name</p>
+            <p><strong>Amount:</strong> ₹2000</p>
+        </div>
+
+        <button class="btn" onclick="payNow()">Pay Now</button>
+        <button class="btn btn-cancel" onclick="goBack()">Cancel</button>
+    </div>
+
+</div>
+
+<script>
+function payNow() {
+    // Dummy payment success
+    window.location.href = "success.html";
+}
+
+function goBack() {
+    window.history.back();
+}
+</script>
+
+</body>
+</html>
