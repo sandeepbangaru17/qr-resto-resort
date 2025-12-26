@@ -2,88 +2,134 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Resort | Booking</title>
+<title>Resort | Rooms & Booking</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #eef6fb;
-    color: #333;
+body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#f5f8fb;
+    color:#333;
 }
 
 /* HEADER */
-header {
-    background: linear-gradient(135deg, #1f618d, #2e86c1);
-    color: white;
-    text-align: center;
-    padding: 40px 15px;
+header{
+    background:linear-gradient(135deg,#1f618d,#3498db);
+    color:#fff;
+    text-align:center;
+    padding:44px 16px;
 }
-header h1 { margin: 0; }
-header p { margin-top: 6px; opacity: 0.95; }
+header h1{margin:0;font-size:30px}
+header p{margin-top:6px;opacity:.95}
 
 /* CONTAINER */
-.container {
-    padding: 20px;
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
 }
 
-/* CARD */
-.card {
-    background: white;
-    border-radius: 16px;
-    padding: 22px;
-    margin-bottom: 22px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+/* GALLERY */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin-top:-40px;
+}
+.gallery img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-/* ROOM GRID */
-.rooms {
-    display: grid;
-    gap: 15px;
-}
-.room {
-    padding: 16px;
-    border-radius: 12px;
-    background: #f2f9ff;
-}
-.room h3 {
-    margin: 0 0 6px 0;
-}
-.price {
-    color: #1f618d;
-    font-weight: 600;
+/* SECTION TITLE */
+.section-title{
+    margin:28px 0 14px;
+    font-size:22px;
 }
 
-/* FORM */
-input, select {
-    width: 100%;
-    padding: 14px;
-    margin-top: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 15px;
+/* ROOMS GRID */
+.rooms{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
 }
 
-/* BUTTONS */
-.btn {
-    width: 100%;
-    padding: 16px;
-    margin-top: 18px;
-    border-radius: 10px;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
-    color: white;
+/* ROOM CARD */
+.room{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    display:flex;
+    flex-direction:column;
 }
-.btn-book {
-    background: #1f618d;
+.room img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
 }
-.btn-back {
-    background: #555;
-    text-decoration: none;
-    display: block;
-    text-align: center;
+.room-body{
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.room h3{margin:0}
+.price{
+    color:#1f618d;
+    font-weight:700;
+}
+.features{
+    font-size:14px;
+    color:#666;
+}
+
+/* BUTTON */
+.btn{
+    margin-top:auto;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    text-decoration:none;
+    color:#fff;
+    font-weight:600;
+    background:linear-gradient(135deg,#1f618d,#3498db);
+    transition:transform .15s,box-shadow .15s;
+}
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+.btn:active{transform:scale(.97)}
+
+/* FULL RESORT */
+.full{
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    margin-top:26px;
+}
+.full input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+/* BACK */
+.back{
+    display:block;
+    margin:22px auto 0;
+    text-align:center;
+    color:#555;
+    text-decoration:none;
 }
 </style>
 </head>
@@ -92,69 +138,67 @@ input, select {
 
 <header>
     <h1>🏨 Resort</h1>
-    <p>Luxury Stay • Peaceful Experience</p>
+    <p>Luxury stay • Peaceful experience</p>
 </header>
 
 <div class="container">
 
+    <!-- GALLERY -->
+    <div class="gallery">
+        <img src="images/resort1.jpg" alt="">
+        <img src="images/resort2.jpg" alt="">
+        <img src="images/resort3.jpg" alt="">
+    </div>
+
     <!-- ROOMS -->
-    <div class="card">
-        <h2>Our Rooms</h2>
-        <div class="rooms">
-            <div class="room">
+    <div class="section-title">Rooms</div>
+    <div class="rooms">
+
+        <div class="room">
+            <img src="images/room_standard.jpg" alt="">
+            <div class="room-body">
                 <h3>Standard Room</h3>
-                <p class="price">₹2000 / night</p>
-            </div>
-            <div class="room">
-                <h3>Deluxe Room</h3>
-                <p class="price">₹3500 / night</p>
-            </div>
-            <div class="room">
-                <h3>Suite Room</h3>
-                <p class="price">₹5000 / night</p>
+                <div class="price">₹2000 / night</div>
+                <div class="features">AC • WiFi • TV</div>
+                <a href="payment.html" class="btn">Book Room</a>
             </div>
         </div>
+
+        <div class="room">
+            <img src="images/room_deluxe.jpg" alt="">
+            <div class="room-body">
+                <h3>Deluxe Room</h3>
+                <div class="price">₹3500 / night</div>
+                <div class="features">AC • WiFi • Balcony</div>
+                <a href="payment.html" class="btn">Book Room</a>
+            </div>
+        </div>
+
+        <div class="room">
+            <img src="images/room_suite.jpg" alt="">
+            <div class="room-body">
+                <h3>Suite Room</h3>
+                <div class="price">₹5000 / night</div>
+                <div class="features">Luxury • Living Area • View</div>
+                <a href="payment.html" class="btn">Book Room</a>
+            </div>
+        </div>
+
     </div>
 
-    <!-- BOOKING -->
-    <div class="card">
-        <h2>Book Your Stay</h2>
-
-        <input type="text" placeholder="Name">
-        <input type="tel" placeholder="Mobile Number">
-
-        <select>
-            <option value="">Select Room Type</option>
-            <option>Standard Room</option>
-            <option>Deluxe Room</option>
-            <option>Suite Room</option>
-        </select>
-
-        <input type="date">
-        <input type="date">
-        <input type="number" placeholder="Number of Guests">
-
-        <button class="btn btn-book" onclick="goPayment()">
-            Proceed to Payment
-        </button>
+    <!-- FULL RESORT BOOKING -->
+    <div class="full">
+        <h3>Book Entire Resort</h3>
+        <input placeholder="Name">
+        <input placeholder="Mobile">
+        <input type="date" placeholder="Check-in">
+        <input type="date" placeholder="Check-out">
+        <input type="number" placeholder="Guests">
+        <a href="payment.html" class="btn">Book Entire Resort</a>
     </div>
 
-    <a href="index.html" class="btn btn-back">⬅ Back to Home</a>
-
+    <a href="index.html" class="back">⬅ Back to Home</a>
 </div>
-
-<script>
-function goPayment() {
-    const data = {
-        service: "Restaurant",
-        name: document.querySelector('input[placeholder="Name"]').value || "Guest",
-        amount: 2000 // example flat amount
-    };
-    localStorage.setItem("booking", JSON.stringify(data));
-    window.location.href = "payment.html";
-}
-</script>
-
 
 </body>
 </html>
