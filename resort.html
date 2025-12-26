@@ -145,9 +145,16 @@ input, select {
 
 <script>
 function goPayment() {
+    const data = {
+        service: "Restaurant",
+        name: document.querySelector('input[placeholder="Name"]').value || "Guest",
+        amount: 2000 // example flat amount
+    };
+    localStorage.setItem("booking", JSON.stringify(data));
     window.location.href = "payment.html";
 }
 </script>
+
 
 </body>
 </html>
