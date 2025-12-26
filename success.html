@@ -237,19 +237,39 @@ View on Google Maps
 <script>
 const booking = JSON.parse(localStorage.getItem("booking")) || {};
 
-// GENERATE BOOKING ID
 function generateId(){
-    return "BK" + Math.floor(Math.random()*900000+100000);
+    return "BK" + Math.floor(Math.random()*900000 + 100000);
 }
 
-document.getElementById("bookingId").innerText = generateId();
+const bookingId = generateId();
+
+// Fill data
+document.getElementById("bookingId").innerText = bookingId;
 document.getElementById("service").innerText = booking.service || "-";
 document.getElementById("item").innerText = booking.item || "-";
 document.getElementById("amount").innerText = "₹ " + (booking.amount || 0);
 
-// CLEAR BOOKING AFTER SUCCESS
+// AUTO WHATSAPP MESSAGE
+const phone = "919876543210"; // change to client number
+const message =
+`Booking Confirmed ✅
+Booking ID: ${bookingId}
+Service: ${booking.service}
+Details: ${booking.item}
+Amount: ₹${booking.amount}`;
+
+const whatsappUrl =
+`https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+// Auto open WhatsApp after 2 seconds
+setTimeout(() => {
+    window.open(whatsappUrl, "_blank");
+}, 2000);
+
+// Clear booking
 localStorage.removeItem("booking");
 </script>
+
 
 </body>
 </html>
