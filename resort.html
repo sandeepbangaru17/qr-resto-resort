@@ -8,18 +8,20 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background: #eef6fb;
     color: #333;
 }
 
 /* HEADER */
 header {
-    background: #1f618d;
+    background: linear-gradient(135deg, #1f618d, #2e86c1);
     color: white;
     text-align: center;
-    padding: 25px 15px;
+    padding: 40px 15px;
 }
+header h1 { margin: 0; }
+header p { margin-top: 6px; opacity: 0.95; }
 
 /* CONTAINER */
 .container {
@@ -29,47 +31,59 @@ header {
 /* CARD */
 .card {
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-/* ROOMS */
-.rooms li {
-    margin-bottom: 10px;
+/* ROOM GRID */
+.rooms {
+    display: grid;
+    gap: 15px;
+}
+.room {
+    padding: 16px;
+    border-radius: 12px;
+    background: #f2f9ff;
+}
+.room h3 {
+    margin: 0 0 6px 0;
+}
+.price {
+    color: #1f618d;
+    font-weight: 600;
 }
 
 /* FORM */
 input, select {
     width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 6px;
+    padding: 14px;
+    margin-top: 12px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 15px;
 }
 
 /* BUTTONS */
 .btn {
-    display: block;
     width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    text-align: center;
-    border-radius: 8px;
-    font-size: 16px;
-    text-decoration: none;
-    color: white;
+    padding: 16px;
+    margin-top: 18px;
+    border-radius: 10px;
+    font-size: 17px;
     border: none;
     cursor: pointer;
+    color: white;
 }
-
 .btn-book {
     background: #1f618d;
 }
-
 .btn-back {
     background: #555;
+    text-decoration: none;
+    display: block;
+    text-align: center;
 }
 </style>
 </head>
@@ -78,7 +92,7 @@ input, select {
 
 <header>
     <h1>🏨 Resort</h1>
-    <p>Relax • Stay • Enjoy</p>
+    <p>Luxury Stay • Peaceful Experience</p>
 </header>
 
 <div class="container">
@@ -86,16 +100,25 @@ input, select {
     <!-- ROOMS -->
     <div class="card">
         <h2>Our Rooms</h2>
-        <ul class="rooms">
-            <li>Standard Room – ₹2000 / night</li>
-            <li>Deluxe Room – ₹3500 / night</li>
-            <li>Suite Room – ₹5000 / night</li>
-        </ul>
+        <div class="rooms">
+            <div class="room">
+                <h3>Standard Room</h3>
+                <p class="price">₹2000 / night</p>
+            </div>
+            <div class="room">
+                <h3>Deluxe Room</h3>
+                <p class="price">₹3500 / night</p>
+            </div>
+            <div class="room">
+                <h3>Suite Room</h3>
+                <p class="price">₹5000 / night</p>
+            </div>
+        </div>
     </div>
 
-    <!-- RESORT BOOKING -->
+    <!-- BOOKING -->
     <div class="card">
-        <h2>Room / Resort Booking</h2>
+        <h2>Book Your Stay</h2>
 
         <input type="text" placeholder="Name">
         <input type="tel" placeholder="Mobile Number">
@@ -107,8 +130,8 @@ input, select {
             <option>Suite Room</option>
         </select>
 
-        <input type="date" placeholder="Check-in Date">
-        <input type="date" placeholder="Check-out Date">
+        <input type="date">
+        <input type="date">
         <input type="number" placeholder="Number of Guests">
 
         <button class="btn btn-book" onclick="goPayment()">
