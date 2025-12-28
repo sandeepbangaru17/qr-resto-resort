@@ -43,6 +43,11 @@ header p{margin-top:6px;opacity:.95}
     box-shadow:0 12px 30px rgba(0,0,0,.15);
     overflow:hidden;
     text-align:center;
+    transition:transform .2s, box-shadow .2s;
+}
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 18px 36px rgba(0,0,0,.2);
 }
 
 .card img{
@@ -72,6 +77,11 @@ header p{margin-top:6px;opacity:.95}
     text-decoration:none;
     font-weight:600;
     color:#fff;
+    transition:opacity .15s, transform .15s;
+}
+.btn:hover{
+    opacity:.95;
+    transform:scale(.98);
 }
 
 .btn-rooms{
@@ -173,7 +183,7 @@ header p{margin-top:6px;opacity:.95}
     <div class="card-body">
         <h2>Rooms Booking</h2>
         <p>Book individual rooms for your stay</p>
-        <a href="resort.html" class="btn btn-rooms">
+        <a href="resort_rooms.html" class="btn btn-rooms">
             View Rooms
         </a>
     </div>
@@ -233,7 +243,6 @@ View on Google Maps
 </div>
 </footer>
 
-<!-- FLOATING WHATSAPP -->
 <a href="https://wa.me/919876543210"
    class="whatsapp-float"
    target="_blank">💬</a>
