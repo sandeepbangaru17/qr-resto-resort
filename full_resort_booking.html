@@ -12,37 +12,26 @@ body{
     background:#f4f6f8;
     color:#333;
 }
-
-/* HEADER */
 header{
     background:linear-gradient(135deg,#8e44ad,#9b59b6);
     color:#fff;
     text-align:center;
     padding:50px 16px;
 }
-header h1{margin:0;font-size:32px}
-header p{margin-top:6px;opacity:.95}
-
-/* CONTAINER */
 .container{
     max-width:420px;
-    margin:30px auto;
+    margin:-40px auto 0;
     padding:20px;
 }
-
-/* CARD */
 .card{
     background:#fff;
     border-radius:18px;
     padding:24px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
 }
-
-/* INPUTS */
 label{
     display:block;
     margin-top:12px;
-    font-size:14px;
     font-weight:600;
 }
 input{
@@ -51,53 +40,33 @@ input{
     margin-top:6px;
     border-radius:8px;
     border:1px solid #ccc;
-    font-size:15px;
 }
-
-/* PRICE */
 .price{
     margin-top:16px;
-    text-align:center;
     font-size:22px;
     font-weight:700;
     color:#8e44ad;
+    text-align:center;
 }
-
-/* BUTTON */
 .btn{
     width:100%;
     margin-top:18px;
     padding:14px;
-    background:#27ae60;
-    color:#fff;
     border:none;
     border-radius:12px;
+    background:#27ae60;
+    color:#fff;
     font-size:16px;
     font-weight:600;
     cursor:pointer;
 }
-
-/* NOTE */
-.note{
-    background:#f3e9fa;
-    border-left:4px solid #8e44ad;
-    padding:10px;
-    margin-top:14px;
-    font-size:13px;
-    color:#4a235a;
-    border-radius:6px;
-}
-
-/* BACK */
 .back{
     display:block;
     text-align:center;
-    margin:20px 0;
+    margin:24px 0;
     color:#555;
     text-decoration:none;
 }
-
-/* FOOTER */
 .footer{
     background:#222;
     color:#aaa;
@@ -106,8 +75,6 @@ input{
     text-align:center;
     font-size:13px;
 }
-
-/* FLOATING WHATSAPP */
 .whatsapp-float{
     position:fixed;
     bottom:22px;
@@ -131,17 +98,17 @@ input{
 
 <header>
 <h1>🏨 Full Resort Booking</h1>
-<p>Book entire resort for events & stays</p>
+<p>Events • Weddings • Corporate Stays</p>
 </header>
 
 <div class="container">
 <div class="card">
 
 <label>Name</label>
-<input id="name" placeholder="Your Name">
+<input id="name">
 
 <label>Mobile</label>
-<input id="mobile" placeholder="10-digit Mobile Number">
+<input id="mobile">
 
 <label>Check-in Date</label>
 <input type="date" id="checkin">
@@ -149,18 +116,12 @@ input{
 <label>Check-out Date</label>
 <input type="date" id="checkout">
 
-<label>Number of Guests</label>
-<input type="number" id="guests" min="1">
+<label>Guests</label>
+<input type="number" id="guests">
 
-<div class="price">₹ 25,000 / day</div>
+<div class="price">₹25,000 / day</div>
 
-<button class="btn" onclick="bookFullResort()">
-Proceed to Payment
-</button>
-
-<div class="note">
-Includes all rooms, pool, lawn & facilities.
-</div>
+<button class="btn" onclick="bookResort()">Proceed to Payment</button>
 
 </div>
 
@@ -176,347 +137,40 @@ Includes all rooms, pool, lawn & facilities.
    target="_blank">💬</a>
 
 <script>
-function bookFullResort(){
+function bookResort(){
     const name = document.getElementById("name").value.trim();
     const mobile = document.getElementById("mobile").value.trim();
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
+    const ci = document.getElementById("checkin").value;
+    const co = document.getElementById("checkout").value;
     const guests = document.getElementById("guests").value;
 
-    if(!name || !mobile || !checkin || !checkout || !guests){
-        alert("Please fill all details");
+    if(!name || !mobile || !ci || !co || !guests){
+        alert("Fill all details");
         return;
     }
 
-    if(mobile.length !== 10 || isNaN(mobile)){
-        alert("Enter valid 10-digit mobile number");
+    if(mobile.length!==10 || isNaN(mobile)){
+        alert("Invalid mobile number");
         return;
     }
 
-    const bookingData = {
-        service: "Full Resort Booking",
-        details: `${guests} guests (${checkin} to ${checkout})`,
-        amount: 25000
-    };
-
-    fetch("http://127.0.0.1:10000/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData)
+    fetch("http://127.0.0.1:10000/api/bookings",{
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify({
+            service:"Full Resort Booking",
+            details:`${guests} guests (${ci} to ${co})`,
+            amount:25000
+        })
     })
-    .then(res => res.json())
-    .then(data => {
-        window.location.href = "payment.html?id=" + data.booking_id;
+    .then(res=>res.json())
+    .then(data=>{
+        window.location.href =
+          "payment.html?id=" + data.booking_id;
     })
-    .catch(err => {
-        alert("Booking failed");
-        console.error(err);
+    .catch(()=>{
+        alert("Server error");
     });
-}
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Resort | Full Resort Booking</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-    margin:0;
-    font-family:"Segoe UI",Arial,sans-serif;
-    background:#f4f6f8;
-    color:#333;
-}
-
-/* HEADER */
-header{
-    background:linear-gradient(135deg,#6c3483,#8e44ad);
-    color:#fff;
-    text-align:center;
-    padding:50px 16px;
-}
-header h1{margin:0;font-size:30px}
-header p{margin-top:6px;opacity:.95}
-
-/* CONTAINER */
-.container{
-    max-width:500px;
-    margin:30px auto;
-    padding:20px;
-}
-
-/* CARD */
-.card{
-    background:#fff;
-    border-radius:18px;
-    padding:26px;
-    box-shadow:0 12px 30px rgba(0,0,0,.15);
-}
-
-/* FORM */
-label{
-    display:block;
-    margin-top:14px;
-    font-weight:600;
-    font-size:14px;
-}
-input{
-    width:100%;
-    padding:12px;
-    margin-top:6px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    font-size:15px;
-}
-
-/* PRICE */
-.price{
-    margin-top:18px;
-    font-size:20px;
-    font-weight:700;
-    color:#8e44ad;
-    text-align:center;
-}
-
-/* BUTTON */
-.btn{
-    width:100%;
-    margin-top:20px;
-    padding:14px;
-    background:#27ae60;
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-}
-
-/* NOTE */
-.note{
-    background:#f3e9fa;
-    border-left:4px solid #8e44ad;
-    padding:10px;
-    margin-top:16px;
-    font-size:13px;
-    color:#4a235a;
-    border-radius:6px;
-}
-
-/* BACK */
-.back{
-    display:block;
-    text-align:center;
-    margin-top:20px;
-    color:#555;
-    text-decoration:none;
-}
-
-/* FOOTER */
-.footer{
-    background:#222;
-    color:#eee;
-    margin-top:40px;
-    padding-top:30px;
-}
-.footer-container{
-    max-width:1100px;
-    margin:auto;
-    padding:0 20px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:24px;
-}
-.footer-block h3{
-    margin-top:0;
-    color:#27ae60;
-    font-size:16px;
-}
-.footer-block p,
-.footer-block a{
-    font-size:14px;
-    color:#ccc;
-    text-decoration:none;
-}
-.footer-block a:hover{color:#27ae60;}
-.map-btn{
-    display:inline-block;
-    margin-top:8px;
-    padding:10px 14px;
-    background:#27ae60;
-    color:#fff !important;
-    border-radius:8px;
-}
-.footer-bottom{
-    margin-top:30px;
-    text-align:center;
-    padding:14px;
-    background:#111;
-    font-size:13px;
-    color:#aaa;
-}
-
-/* FLOATING WHATSAPP */
-.whatsapp-float{
-    position:fixed;
-    bottom:22px;
-    right:20px;
-    width:56px;
-    height:56px;
-    background:#25d366;
-    color:#fff;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    text-decoration:none;
-    box-shadow:0 8px 18px rgba(0,0,0,.3);
-    z-index:999;
-}
-.whatsapp-float:hover{transform:scale(1.05);}
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>🏨 Full Resort Booking</h1>
-<p>Book the entire resort for your event</p>
-</header>
-
-<div class="container">
-<div class="card">
-
-<label>Name</label>
-<input id="name" placeholder="Your Name">
-
-<label>Mobile</label>
-<input id="mobile" placeholder="10-digit Mobile Number">
-
-<label>Check-in Date</label>
-<input type="date" id="checkin" onchange="calculatePrice()">
-
-<label>Check-out Date</label>
-<input type="date" id="checkout" onchange="calculatePrice()">
-
-<label>Number of Guests</label>
-<input type="number" id="guests" min="1">
-
-<div class="price" id="price">₹25,000 / day</div>
-
-<button class="btn" onclick="bookResort()">Proceed to Payment</button>
-
-<div class="note">
-Includes all rooms, common areas & facilities.
-</div>
-
-</div>
-
-<a href="resort_home.html" class="back">⬅ Back to Resort</a>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footer-container">
-
-        <div class="footer-block">
-            <h3>📍 Address</h3>
-            <p>
-                ABC Restaurant & Resort<br>
-                Beach Road, Visakhapatnam<br>
-                Andhra Pradesh
-            </p>
-        </div>
-
-        <div class="footer-block">
-            <h3>📞 Contact</h3>
-            <p>
-                Phone: <a href="tel:9876543210">+91 98765 43210</a><br>
-                WhatsApp: <a href="https://wa.me/919876543210" target="_blank">
-                    Chat Now
-                </a>
-            </p>
-        </div>
-
-        <div class="footer-block">
-            <h3>🗺 Location</h3>
-            <a class="map-btn"
-               href="https://www.google.com/maps?q=Visakhapatnam"
-               target="_blank">
-               View on Google Maps
-            </a>
-        </div>
-
-    </div>
-
-    <div class="footer-bottom">
-        © 2025 ABC Restaurant & Resort. All rights reserved.
-    </div>
-</footer>
-
-<!-- FLOATING WHATSAPP -->
-<a href="https://wa.me/919876543210"
-   class="whatsapp-float"
-   target="_blank"
-   title="Chat on WhatsApp">
-💬
-</a>
-
-<script>
-const PER_DAY = 25000;
-let totalAmount = PER_DAY;
-
-function calculatePrice(){
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    if(!checkin || !checkout) return;
-
-    const inDate = new Date(checkin);
-    const outDate = new Date(checkout);
-    const diff = (outDate - inDate) / (1000*60*60*24);
-
-    if(diff <= 0){
-        alert("Check-out date must be after check-in date");
-        document.getElementById("checkout").value="";
-        totalAmount = PER_DAY;
-        document.getElementById("price").innerText="₹25,000 / day";
-        return;
-    }
-
-    totalAmount = diff * PER_DAY;
-    document.getElementById("price").innerText =
-        `₹${totalAmount.toLocaleString()} (${diff} day${diff>1?"s":""})`;
-}
-
-function bookResort(){
-    const name=nameInput=name=document.getElementById("name").value.trim();
-    const mobile=document.getElementById("mobile").value.trim();
-    const checkin=document.getElementById("checkin").value;
-    const checkout=document.getElementById("checkout").value;
-    const guests=document.getElementById("guests").value;
-
-    if(!name||!mobile||!checkin||!checkout||!guests){
-        alert("Please fill all details");
-        return;
-    }
-
-    if(mobile.length!==10||isNaN(mobile)){
-        alert("Enter valid 10-digit mobile number");
-        return;
-    }
-
-    localStorage.setItem("booking",JSON.stringify({
-        service:"Full Resort Booking",
-        item:`${guests} guests (${checkin} to ${checkout})`,
-        amount: totalAmount
-    }));
-
-    window.location.href="payment.html";
 }
 </script>
 
