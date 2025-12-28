@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Full Resort Booking</title>
+<title>Resort | Full Resort Booking</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -12,27 +12,38 @@ body{
     background:#f4f6f8;
     color:#333;
 }
+
+/* HEADER */
 header{
     background:linear-gradient(135deg,#8e44ad,#9b59b6);
     color:#fff;
     text-align:center;
     padding:50px 16px;
 }
+header h1{margin:0;font-size:32px}
+header p{margin-top:6px;opacity:.95}
+
+/* CONTAINER */
 .container{
     max-width:420px;
-    margin:-40px auto 0;
+    margin:30px auto;
     padding:20px;
 }
+
+/* CARD */
 .card{
     background:#fff;
     border-radius:18px;
     padding:24px;
-    box-shadow:0 12px 30px rgba(0,0,0,.15);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
+
+/* INPUTS */
 label{
-    display:block;
-    margin-top:12px;
+    font-size:14px;
     font-weight:600;
+    margin-top:12px;
+    display:block;
 }
 input{
     width:100%;
@@ -40,33 +51,42 @@ input{
     margin-top:6px;
     border-radius:8px;
     border:1px solid #ccc;
+    font-size:15px;
 }
+
+/* PRICE */
 .price{
-    margin-top:16px;
-    font-size:22px;
+    margin-top:14px;
+    font-size:18px;
     font-weight:700;
-    color:#8e44ad;
+    color:#27ae60;
     text-align:center;
 }
+
+/* BUTTON */
 .btn{
     width:100%;
     margin-top:18px;
     padding:14px;
-    border:none;
-    border-radius:12px;
     background:#27ae60;
     color:#fff;
+    border:none;
+    border-radius:12px;
     font-size:16px;
     font-weight:600;
     cursor:pointer;
 }
+
+/* BACK */
 .back{
     display:block;
     text-align:center;
-    margin:24px 0;
+    margin:20px 0;
     color:#555;
     text-decoration:none;
 }
+
+/* FOOTER */
 .footer{
     background:#222;
     color:#aaa;
@@ -75,6 +95,8 @@ input{
     text-align:center;
     font-size:13px;
 }
+
+/* WHATSAPP */
 .whatsapp-float{
     position:fixed;
     bottom:22px;
@@ -98,30 +120,29 @@ input{
 
 <header>
 <h1>🏨 Full Resort Booking</h1>
-<p>Events • Weddings • Corporate Stays</p>
+<p>Perfect for events & group stays</p>
 </header>
 
 <div class="container">
 <div class="card">
 
 <label>Name</label>
-<input id="name">
+<input id="name" placeholder="Your Name">
 
 <label>Mobile</label>
-<input id="mobile">
+<input id="mobile" placeholder="10-digit Mobile Number">
 
-<label>Check-in Date</label>
-<input type="date" id="checkin">
+<label>Booking Date</label>
+<input type="date" id="date">
 
-<label>Check-out Date</label>
-<input type="date" id="checkout">
-
-<label>Guests</label>
-<input type="number" id="guests">
+<label>Number of Guests</label>
+<input type="number" id="guests" min="1" placeholder="Guests">
 
 <div class="price">₹25,000 / day</div>
 
-<button class="btn" onclick="bookResort()">Proceed to Payment</button>
+<button class="btn" onclick="bookResort()">
+Confirm Full Resort Booking
+</button>
 
 </div>
 
@@ -133,24 +154,23 @@ input{
 </footer>
 
 <a href="https://wa.me/919876543210"
-   class="whatsapp-float"
-   target="_blank">💬</a>
+class="whatsapp-float"
+target="_blank">💬</a>
 
 <script>
 function bookResort(){
     const name = document.getElementById("name").value.trim();
     const mobile = document.getElementById("mobile").value.trim();
-    const ci = document.getElementById("checkin").value;
-    const co = document.getElementById("checkout").value;
+    const date = document.getElementById("date").value;
     const guests = document.getElementById("guests").value;
 
-    if(!name || !mobile || !ci || !co || !guests){
-        alert("Fill all details");
+    if(!name || !mobile || !date || !guests){
+        alert("Please fill all details");
         return;
     }
 
-    if(mobile.length!==10 || isNaN(mobile)){
-        alert("Invalid mobile number");
+    if(mobile.length !== 10 || isNaN(mobile)){
+        alert("Enter valid 10-digit mobile number");
         return;
     }
 
@@ -159,17 +179,21 @@ function bookResort(){
         headers:{ "Content-Type":"application/json" },
         body:JSON.stringify({
             service:"Full Resort Booking",
-            details:`${guests} guests (${ci} to ${co})`,
+            details:`Full resort on ${date} for ${guests} guests`,
             amount:25000
         })
     })
     .then(res=>res.json())
     .then(data=>{
-        window.location.href =
-          "payment.html?id=" + data.booking_id;
+        if(data.booking_id){
+            window.location.href =
+              "payment.html?id=" + data.booking_id;
+        }else{
+            alert("Booking failed");
+        }
     })
     .catch(()=>{
-        alert("Server error");
+        alert("Backend not reachable");
     });
 }
 </script>

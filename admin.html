@@ -43,6 +43,20 @@ th{
 .CONFIRMED{color:#2980b9;}
 .PAID{color:#27ae60;}
 .CANCELLED{color:#c0392b;}
+
+select{
+    padding:6px;
+    border-radius:6px;
+}
+.refresh{
+    margin-bottom:12px;
+    padding:10px 14px;
+    border:none;
+    border-radius:8px;
+    background:#27ae60;
+    color:#fff;
+    cursor:pointer;
+}
 </style>
 </head>
 
@@ -50,10 +64,13 @@ th{
 
 <header>
 <h1>📊 Admin Dashboard</h1>
-<p>All Bookings</p>
+<p>Live Bookings</p>
 </header>
 
 <div class="container">
+
+<button class="refresh" onclick="loadBookings()">🔄 Refresh</button>
+
 <table>
 <thead>
 <tr>
@@ -62,45 +79,72 @@ th{
 <th>Details</th>
 <th>Amount</th>
 <th>Status</th>
+<th>Change Status</th>
 <th>Created</th>
 </tr>
 </thead>
 <tbody id="bookingTable">
-<tr><td colspan="6">Loading...</td></tr>
+<tr><td colspan="7">Loading...</td></tr>
 </tbody>
 </table>
+
 </div>
 
 <script>
-fetch("http://127.0.0.1:5000/api/bookings")
-.then(res => res.json())
-.then(data => {
-    const tbody = document.getElementById("bookingTable");
-    tbody.innerHTML = "";
+const API = "http://127.0.0.1:10000/api/bookings";
 
-    if(data.length === 0){
-        tbody.innerHTML =
-          "<tr><td colspan='6'>No bookings found</td></tr>";
-        return;
-    }
+function loadBookings(){
+    fetch(API)
+    .then(res => res.json())
+    .then(data => {
+        const tbody = document.getElementById("bookingTable");
+        tbody.innerHTML = "";
 
-    data.forEach(b => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${b.booking_id}</td>
-            <td>${b.service}</td>
-            <td>${b.details}</td>
-            <td>₹ ${b.amount}</td>
-            <td class="status ${b.status}">${b.status}</td>
-            <td>${b.created_at}</td>
-        `;
-        tbody.appendChild(row);
+        if(data.length === 0){
+            tbody.innerHTML =
+              "<tr><td colspan='7'>No bookings found</td></tr>";
+            return;
+        }
+
+        data.forEach(b => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${b.booking_id}</td>
+                <td>${b.service}</td>
+                <td>${b.details}</td>
+                <td>₹ ${b.amount}</td>
+                <td class="status ${b.status}">${b.status}</td>
+                <td>
+                    <select onchange="updateStatus('${b.booking_id}', this.value)">
+                        <option disabled selected>Change</option>
+                        <option value="CONFIRMED">CONFIRMED</option>
+                        <option value="PAID">PAID</option>
+                        <option value="CANCELLED">CANCELLED</option>
+                    </select>
+                </td>
+                <td>${b.created_at}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    })
+    .catch(err=>{
+        alert("Unable to load bookings");
+        console.error(err);
     });
-})
-.catch(err=>{
-    alert("Unable to load bookings");
-    console.error(err);
-});
+}
+
+function updateStatus(id,status){
+    fetch(`${API}/${id}/status`,{
+        method:"PUT",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify({status})
+    })
+    .then(()=>loadBookings());
+}
+
+// AUTO LOAD
+loadBookings();
+setInterval(loadBookings, 5000);
 </script>
 
 </body>

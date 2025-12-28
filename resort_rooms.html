@@ -25,65 +25,68 @@ header p{margin-top:6px;opacity:.95}
 
 /* CONTAINER */
 .container{
-    max-width:1100px;
+    max-width:900px;
     margin:-40px auto 0;
     padding:20px;
 }
 
-/* ROOMS GRID */
+/* ROOMS */
 .rooms{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:24px;
 }
 
-/* ROOM CARD */
-.room{
+.card{
     background:#fff;
     border-radius:18px;
     box-shadow:0 12px 30px rgba(0,0,0,.15);
     overflow:hidden;
+    text-align:center;
 }
-.room img{
+
+.card img{
     width:100%;
     height:200px;
     object-fit:cover;
 }
-.room-body{
-    padding:20px;
+
+.card-body{
+    padding:22px;
 }
-.room h2{margin:0}
-.room p{
+
+.card h2{margin:0}
+.card p{
     font-size:14px;
     color:#666;
-    margin:8px 0;
+    margin:10px 0;
 }
+
 .price{
     font-size:18px;
     font-weight:700;
     color:#27ae60;
-    margin:10px 0;
+    margin:8px 0;
 }
 
-/* FORM */
-.room input{
+input{
     width:100%;
     padding:10px;
     margin-top:8px;
     border-radius:8px;
     border:1px solid #ccc;
+    font-size:14px;
 }
 
-/* BUTTON */
 .btn{
     margin-top:12px;
     width:100%;
     padding:14px;
-    border:none;
-    border-radius:12px;
     background:#27ae60;
     color:#fff;
-    font-size:15px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
     font-weight:600;
     cursor:pointer;
 }
@@ -123,6 +126,7 @@ header p{margin-top:6px;opacity:.95}
     font-size:28px;
     text-decoration:none;
     box-shadow:0 8px 18px rgba(0,0,0,.3);
+    z-index:999;
 }
 </style>
 </head>
@@ -135,72 +139,50 @@ header p{margin-top:6px;opacity:.95}
 </header>
 
 <div class="container">
-
 <div class="rooms">
 
-<!-- STANDARD ROOM -->
-<div class="room">
+<!-- STANDARD -->
+<div class="card">
 <img src="images/room_standard.jpg">
-<div class="room-body">
+<div class="card-body">
 <h2>Standard Room</h2>
-<p>AC • WiFi • TV</p>
+<p>Comfortable room for couples</p>
 <div class="price">₹2000 / night</div>
-
-<input id="std-name" placeholder="Your Name">
-<input id="std-mobile" placeholder="Mobile Number">
-<input type="date" id="std-date">
-
-<button class="btn" onclick="bookRoom(
-    'Standard Room',
-    2000,
-    'std-name',
-    'std-mobile',
-    'std-date'
-)">Book Now</button>
+<input type="date" id="date-standard">
+<button class="btn"
+onclick="bookRoom('Standard Room',2000,'date-standard')">
+Book Now
+</button>
 </div>
 </div>
 
-<!-- DELUXE ROOM -->
-<div class="room">
+<!-- DELUXE -->
+<div class="card">
 <img src="images/room_deluxe.jpg">
-<div class="room-body">
+<div class="card-body">
 <h2>Deluxe Room</h2>
-<p>Balcony • AC • Premium View</p>
+<p>Spacious room with balcony</p>
 <div class="price">₹3500 / night</div>
-
-<input id="dlx-name" placeholder="Your Name">
-<input id="dlx-mobile" placeholder="Mobile Number">
-<input type="date" id="dlx-date">
-
-<button class="btn" onclick="bookRoom(
-    'Deluxe Room',
-    3500,
-    'dlx-name',
-    'dlx-mobile',
-    'dlx-date'
-)">Book Now</button>
+<input type="date" id="date-deluxe">
+<button class="btn"
+onclick="bookRoom('Deluxe Room',3500,'date-deluxe')">
+Book Now
+</button>
 </div>
 </div>
 
-<!-- SUITE ROOM -->
-<div class="room">
+<!-- SUITE -->
+<div class="card">
 <img src="images/room_suite.jpg">
-<div class="room-body">
+<div class="card-body">
 <h2>Suite Room</h2>
-<p>Luxury • Living Area • Sea View</p>
+<p>Luxury suite for families</p>
 <div class="price">₹5000 / night</div>
-
-<input id="ste-name" placeholder="Your Name">
-<input id="ste-mobile" placeholder="Mobile Number">
-<input type="date" id="ste-date">
-
-<button class="btn" onclick="bookRoom(
-    'Suite Room',
-    5000,
-    'ste-name',
-    'ste-mobile',
-    'ste-date'
-)">Book Now</button>
+<input type="date" id="date-suite">
+<button class="btn"
+onclick="bookRoom('Suite Room',5000,'date-suite')">
+Book Now
+</button>
 </div>
 </div>
 
@@ -214,22 +196,14 @@ header p{margin-top:6px;opacity:.95}
 </footer>
 
 <a href="https://wa.me/919876543210"
-   class="whatsapp-float"
-   target="_blank">💬</a>
+class="whatsapp-float"
+target="_blank">💬</a>
 
 <script>
-function bookRoom(room, price, nameId, mobileId, dateId){
-    const name = document.getElementById(nameId).value.trim();
-    const mobile = document.getElementById(mobileId).value.trim();
+function bookRoom(room, price, dateId){
     const date = document.getElementById(dateId).value;
-
-    if(!name || !mobile || !date){
-        alert("Please fill all details");
-        return;
-    }
-
-    if(mobile.length !== 10 || isNaN(mobile)){
-        alert("Enter valid 10-digit mobile number");
+    if(!date){
+        alert("Please select date");
         return;
     }
 
@@ -252,7 +226,7 @@ function bookRoom(room, price, nameId, mobileId, dateId){
         }
     })
     .catch(()=>{
-        alert("Server error");
+        alert("Backend not reachable");
     });
 }
 </script>
