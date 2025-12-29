@@ -1,119 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#2c3e50,#34495e);
-    font-family:"Segoe UI",Arial,sans-serif;
-}
-
-.card{
-    background:#fff;
-    padding:32px;
-    border-radius:14px;
-    width:320px;
-    box-shadow:0 14px 35px rgba(0,0,0,.3);
-}
-
-h2{
-    text-align:center;
-    margin:0 0 20px;
-    color:#2c3e50;
-}
-
-input{
-    width:100%;
-    padding:12px;
-    margin-top:12px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    font-size:15px;
-}
-
-button{
-    width:100%;
-    margin-top:18px;
-    padding:14px;
-    background:#27ae60;
-    border:none;
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#219150;
-}
-
-.note{
-    margin-top:14px;
-    font-size:13px;
-    text-align:center;
-    color:#777;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#fb923c;--success:#22c55e;--danger:#ef4444;
+      --bg:linear-gradient(135deg,#020617,#0f172a);
+      --glass:rgba(15,23,42,.92);--border:rgba(31,41,55,.8);
+      --muted:#9ca3af;--text:#e5e7eb;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:"Poppins",sans-serif;height:100vh;display:flex;align-items:center;
+      justify-content:center;background:var(--bg);color:var(--text);overflow:hidden;
+    }
+    body::before{
+      content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(251,146,60,.15),transparent 50%),
+      radial-gradient(circle at 80% 20%,rgba(34,197,94,.12),transparent 50%);pointer-events:none;
+    }
+    .card{
+      background:var(--glass);backdrop-filter:blur(24px);border-radius:24px;width:100%;
+      max-width:360px;padding:40px 32px;box-shadow:0 32px 80px rgba(0,0,0,.75);
+      border:1px solid var(--border);
+    }
+    h2{text-align:center;margin:0 0 32px;font-size:24px;font-weight:600;background:linear-gradient(135deg,var(--text),#f1f5f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .form-group{margin-bottom:24px;}
+    label{display:block;margin-bottom:8px;font-size:13px;font-weight:500;color:var(--text);}
+    input{width:100%;padding:16px 20px;background:rgba(15,23,42,.7);border:1px solid var(--border);border-radius:14px;font-size:15px;color:var(--text);transition:.2s;}
+    input::placeholder{color:var(--muted);}
+    input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(251,146,60,.2);background:rgba(15,23,42,.9);}
+    input.error{border-color:var(--danger)!important;box-shadow:0 0 0 3px rgba(239,68,68,.25)!important;}
+    .error-message{color:var(--danger);font-size:12px;margin-top:6px;display:none;}
+    button{width:100%;padding:16px;background:linear-gradient(135deg,var(--success),#16a34a);border:none;color:#fff;font-size:16px;font-weight:500;border-radius:16px;cursor:pointer;transition:.2s;box-shadow:0 16px 40px rgba(34,197,94,.5);margin-top:8px;}
+    button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 24px 55px rgba(34,197,94,.7);}
+    button:disabled{opacity:.6;cursor:not-allowed;}
+    button.loading{position:relative;color:transparent;}
+    button.loading::after{content:"⏳";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 1s linear infinite;}
+    @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+    .note{margin-top:24px;font-size:13px;text-align:center;color:var(--muted);padding:12px;background:rgba(31,41,55,.5);border-radius:12px;border-left:3px solid var(--primary);}
+    code{background:rgba(251,146,60,.2);padding:2px 6px;border-radius:4px;color:var(--primary);}
+    @media(max-width:480px){.card{margin:20px;padding:32px 24px;}h2{font-size:22px;}}
+  </style>
 </head>
-
 <body>
-
-<div class="card">
+  <div class="card">
     <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Username</label>
+      <input id="user" placeholder="admin">
+      <div class="error-message" id="user-error"></div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input id="pass" type="password" placeholder="admin123">
+      <div class="error-message" id="pass-error"></div>
+    </div>
+    <button id="loginBtn" onclick="login()">Sign In</button>
+    <div class="note">
+      <strong>Demo:</strong> admin / admin123
+    </div>
+  </div>
 
-    <input id="user" placeholder="Username">
-    <input id="pass" type="password" placeholder="Password">
+  <script>
+    // CHECK IF ALREADY LOGGED IN
+    if(localStorage.getItem("admin_token")) window.location.href="admin_dashboard.html";
 
-    <button onclick="login()">Login</button>
-
-    <div class="note">Authorized access only</div>
-</div>
-
-<script>
-/* AUTO REDIRECT IF ALREADY LOGGED IN */
-if(localStorage.getItem("admin_token")){
-    window.location.href = "admin.html";
-}
-
-function login(){
-    const username = document.getElementById("user").value.trim();
-    const password = document.getElementById("pass").value.trim();
-
-    if(!username || !password){
-        alert("Enter username and password");
-        return;
+    function showError(id,msg){
+      document.getElementById(id).classList.add('error');
+      document.getElementById(id+'-error').textContent=msg;
+      document.getElementById(id+'-error').style.display='block';
+    }
+    function clearError(id){
+      document.getElementById(id).classList.remove('error');
+      document.getElementById(id+'-error').style.display='none';
+    }
+    function setLoading(loading){
+      const btn=document.getElementById('loginBtn');
+      btn.disabled=loading;btn.classList.toggle('loading',loading);btn.textContent=loading?'':'Sign In';
     }
 
-    fetch("http://127.0.0.1:10000/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-    .then(res => {
+    async function login(){
+      const user=document.getElementById("user").value.trim();
+      const pass=document.getElementById("pass").value.trim();
+      
+      clearError('user');clearError('pass');
+      
+      if(!user){showError('user','Username required');return;}
+      if(!pass){showError('pass','Password required');return;}
+      
+      setLoading(true);
+      try{
+        const res=await fetch("http://127.0.0.1:10000/api/admin/login",{
+          method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({username:user,password:pass})
+        });
         if(!res.ok) throw new Error();
-        return res.json();
-    })
-    .then(data => {
-        localStorage.setItem("admin_token", data.token);
-        window.location.href = "admin.html";
-    })
-    .catch(() => {
-        alert("Invalid admin credentials");
-    });
-}
-</script>
+        const data=await res.json();
+        localStorage.setItem("admin_token",data.token);
+        window.location.href="admin_dashboard.html";
+      }catch(e){
+        alert("❌ Invalid credentials");
+      }finally{
+        setLoading(false);
+      }
+    }
 
+    document.addEventListener('keypress',e=>e.key==='Enter'&&login());
+  </script>
 </body>
 </html>

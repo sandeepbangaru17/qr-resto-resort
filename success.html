@@ -1,137 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Booking Successful</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Booking Successful</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-    margin:0;
-    font-family:"Segoe UI",Arial,sans-serif;
-    background:#f4f6f8;
-    color:#333;
-}
-header{
-    background:linear-gradient(135deg,#27ae60,#2ecc71);
-    color:#fff;
-    text-align:center;
-    padding:50px 16px;
-}
-.container{
-    max-width:520px;
-    margin:30px auto;
-    padding:20px;
-}
-.card{
-    background:#fff;
-    border-radius:18px;
-    padding:26px;
-    box-shadow:0 12px 30px rgba(0,0,0,.15);
-    text-align:center;
-}
-.check{
-    font-size:64px;
-    color:#27ae60;
-}
-.detail{
-    display:flex;
-    justify-content:space-between;
-    margin-top:12px;
-    font-size:15px;
-}
-.amount{
-    margin-top:18px;
-    font-size:22px;
-    font-weight:700;
-    color:#27ae60;
-}
-.btn{
-    display:block;
-    margin-top:18px;
-    padding:14px;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:600;
-    color:#fff;
-}
-.btn-home{background:#2980b9;}
-.btn-print{background:#7f8c8d;}
-.footer{
-    background:#222;
-    color:#aaa;
-    margin-top:40px;
-    padding:14px;
-    text-align:center;
-    font-size:13px;
-}
-.whatsapp-float{
-    position:fixed;
-    bottom:22px;
-    right:20px;
-    width:56px;
-    height:56px;
-    background:#25d366;
-    color:#fff;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    text-decoration:none;
-    box-shadow:0 8px 18px rgba(0,0,0,.3);
-}
-</style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --primary:#fb923c;
+      --success:#22c55e;
+      --bg:#020617;
+      --surface:rgba(15,23,42,.95);
+      --glass:rgba(15,23,42,.92);
+      --border:rgba(31,41,55,.8);
+      --muted:#9ca3af;
+      --text:#e5e7eb;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:"Poppins",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    /* HEADER */
+    header{
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#fff;
+      text-align:center;
+      padding:60px 20px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    header::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top left,rgba(255,255,255,.2),transparent 50%);
+      pointer-events:none;
+    }
+
+    .header-inner{
+      position:relative;
+      max-width:520px;
+      margin:auto;
+    }
+
+    header h1{
+      margin:0;
+      font-size:32px;
+      font-weight:600;
+      letter-spacing:.02em;
+    }
+
+    header p{
+      margin-top:8px;
+      font-size:15px;
+      opacity:.95;
+    }
+
+    /* CONTAINER */
+    .container{
+      max-width:520px;
+      margin:-50px auto 0;
+      padding:24px 20px 40px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* SUCCESS CARD */
+    .card{
+      background:var(--glass);
+      backdrop-filter:blur(20px);
+      border-radius:28px;
+      padding:40px 32px;
+      box-shadow:0 40px 100px rgba(0,0,0,.8);
+      border:1px solid var(--border);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(251,146,60,.08));
+      pointer-events:none;
+    }
+
+    .card-inner{
+      position:relative;
+    }
+
+    /* CELEBRATION */
+    .check{
+      width:100px;
+      height:100px;
+      margin:0 auto 24px;
+      background:linear-gradient(135deg,var(--success),#16a34a);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:48px;
+      color:#fff;
+      box-shadow:0 24px 60px rgba(34,197,94,.6);
+      animation:celebrate 2s ease-in-out;
+    }
+
+    @keyframes celebrate{
+      0% { transform:scale(0) rotate(0deg); opacity:0; }
+      50% { transform:scale(1.1) rotate(180deg); }
+      100% { transform:scale(1) rotate(360deg); opacity:1; }
+    }
+
+    .card h2{
+      margin:0 0 28px;
+      font-size:24px;
+      font-weight:500;
+      color:var(--text);
+    }
+
+    /* DETAILS */
+    .detail{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 0;
+      border-bottom:1px solid var(--border);
+      font-size:14px;
+    }
+
+    .detail:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .detail-label{
+      font-weight:500;
+      color:var(--text);
+    }
+
+    .detail-value{
+      color:var(--muted);
+      font-weight:500;
+    }
+
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 12px;
+      background:linear-gradient(135deg,rgba(34,197,94,.2),rgba(16,163,74,.2));
+      border-radius:999px;
+      font-size:13px;
+      color:var(--success);
+      border:1px solid rgba(34,197,94,.4);
+    }
+
+    .amount{
+      margin:28px 0 32px;
+      font-size:32px;
+      font-weight:600;
+      color:var(--success);
+      background:linear-gradient(135deg,var(--success),#16a34a);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    /* BUTTONS */
+    .btn-group{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:16px 20px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:500;
+      font-size:15px;
+      color:#fff;
+      transition:.2s ease;
+      border:none;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .btn-home{
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      box-shadow:0 16px 40px rgba(37,99,235,.5);
+    }
+
+    .btn-home:hover{
+      transform:translateY(-2px);
+      box-shadow:0 24px 55px rgba(37,99,235,.7);
+    }
+
+    .btn-print{
+      background:linear-gradient(135deg,#6b7280,#4b5563);
+      box-shadow:0 16px 40px rgba(107,114,128,.4);
+    }
+
+    .btn-print:hover{
+      transform:translateY(-2px);
+      box-shadow:0 24px 55px rgba(107,114,128,.6);
+    }
+
+    /* FOOTER */
+    .footer{
+      background:#020617;
+      color:var(--muted);
+      margin-top:56px;
+      padding:20px;
+      text-align:center;
+      font-size:13px;
+      border-top:1px solid var(--border);
+    }
+
+    /* WHATSAPP */
+    .whatsapp-float{
+      position:fixed;
+      bottom:22px;
+      right:20px;
+      width:56px;
+      height:56px;
+      background:#22c55e;
+      color:#022c22;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      text-decoration:none;
+      box-shadow:0 18px 40px rgba(22,163,74,.75);
+      z-index:999;
+      transition:.2s ease;
+    }
+
+    .whatsapp-float:hover{
+      transform:translateY(-2px);
+      box-shadow:0 24px 55px rgba(22,163,74,.85);
+    }
+
+    /* PRINT STYLES */
+    @media print{
+      body *{ visibility:hidden; }
+      .card, .card *{ visibility:visible; }
+      .card{ 
+        position:absolute; 
+        left:0; 
+        top:0; 
+        box-shadow:none;
+        background:#fff;
+        color:#000;
+      }
+      .btn-group{ display:none; }
+      .whatsapp-float{ display:none; }
+      header, .footer{ display:none; }
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:480px){
+      .container{
+        margin-top:-40px;
+        padding:16px;
+      }
+      
+      .card{
+        padding:32px 24px;
+      }
+      
+      header h1{
+        font-size:28px;
+      }
+      
+      .check{
+        width:80px;
+        height:80px;
+        font-size:40px;
+      }
+      
+      .amount{
+        font-size:28px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-<h1>✅ Booking Confirmed</h1>
-<p>Thank you for choosing us</p>
+  <div class="header-inner">
+    <h1>✅ Booking Confirmed</h1>
+    <p>Thank you for choosing ABC Restaurant & Resort</p>
+  </div>
 </header>
 
 <div class="container">
-<div class="card">
+  <div class="card">
+    <div class="card-inner">
+      
+      <div class="check">✔</div>
+      <h2>Your booking is confirmed!</h2>
 
-<div class="check">✔</div>
-<h2>Your booking is successful</h2>
+      <div class="detail">
+        <span class="detail-label">Booking ID</span>
+        <span class="detail-value" id="bookingId">-</span>
+      </div>
 
-<div class="detail">
-<strong>Booking ID</strong>
-<span id="bookingId">-</span>
-</div>
+      <div class="detail">
+        <span class="detail-label">Service</span>
+        <span class="detail-value" id="service">-</span>
+      </div>
 
-<div class="detail">
-<strong>Service</strong>
-<span id="service">-</span>
-</div>
+      <div class="detail">
+        <span class="detail-label">Details</span>
+        <span class="detail-value" id="item">-</span>
+      </div>
 
-<div class="detail">
-<strong>Details</strong>
-<span id="item">-</span>
-</div>
+      <div class="detail">
+        <span class="detail-label">Status</span>
+        <span class="detail-value">
+          <span class="status-badge" id="status">-</span>
+        </span>
+      </div>
 
-<div class="detail">
-<strong>Status</strong>
-<span id="status">-</span>
-</div>
+      <div class="amount" id="amount">₹0</div>
 
-<div class="amount" id="amount">₹0</div>
+      <div class="btn-group">
+        <a href="index.html" class="btn btn-home">
+          🏠 Back to Home
+        </a>
+        <button class="btn btn-print" onclick="window.print()">
+          🖨️ Print / Save Receipt
+        </button>
+      </div>
 
-<a href="index.html" class="btn btn-home">Back to Home</a>
-<a href="#" onclick="window.print()" class="btn btn-print">Print / Save</a>
-
-</div>
+    </div>
+  </div>
 </div>
 
 <footer class="footer">
-© 2025 ABC Restaurant & Resort
+  © 2025 ABC Restaurant & Resort. All rights reserved.
 </footer>
 
-<a href="https://wa.me/919876543210"
-   class="whatsapp-float"
-   target="_blank">💬</a>
+<a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">💬</a>
 
 <script>
 const params = new URLSearchParams(window.location.search);
@@ -143,7 +376,7 @@ if(!bookingId){
 }
 
 // FETCH BOOKING DETAILS (READ ONLY)
-fetch("http://127.0.0.1:10000/api/bookings/" + bookingId + "/status",
+fetch("http://127.0.0.1:10000/api/bookings/" + bookingId)
 .then(res => {
     if(!res.ok) throw new Error();
     return res.json();
@@ -152,7 +385,7 @@ fetch("http://127.0.0.1:10000/api/bookings/" + bookingId + "/status",
     document.getElementById("bookingId").innerText = data.booking_id;
     document.getElementById("service").innerText = data.service;
     document.getElementById("item").innerText = data.details;
-    document.getElementById("status").innerText = data.status;
+    document.getElementById("status").innerText = data.status.toUpperCase();
     document.getElementById("amount").innerText = "₹ " + data.amount;
 })
 .catch(() => {

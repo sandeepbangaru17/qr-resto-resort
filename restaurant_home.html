@@ -1,280 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Restaurant | ABC</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Restaurant | ABC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root{
-    --primary:#c0392b;
-    --secondary:#2980b9;
-    --dark:#222;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-*{box-sizing:border-box}
+  <style>
+    :root{
+      --primary:#e74c3c;
+      --secondary:#2563eb;
+      --bg:#020617;
+      --surface:#0b1220;
+      --muted:#9ca3af;
+      --text:#e5e7eb;
+    }
 
-body{
-    margin:0;
-    font-family:"Segoe UI",Arial,sans-serif;
-    background:#f4f6f8;
-    color:#333;
-}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
-/* HEADER */
-header{
-    background:
-      linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-      url("images/restaurant.jpg") center/cover no-repeat;
-    color:#fff;
-    text-align:center;
-    padding:90px 20px 70px;
-}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
 
-header h1{
-    margin:0;
-    font-size:36px;
-    letter-spacing:1px;
-}
+    /* HEADER */
+    header{
+      background:
+        radial-gradient(circle at top left,rgba(248,113,113,.28),transparent 55%),
+        radial-gradient(circle at bottom right,rgba(56,189,248,.25),transparent 55%),
+        linear-gradient(rgba(15,23,42,.82),rgba(15,23,42,.86)),
+        url("images/restaurant.jpg") center/cover no-repeat fixed;
+      color:#f9fafb;
+      text-align:center;
+      padding:90px 18px 70px;
+      position:relative;
+    }
 
-header p{
-    margin-top:10px;
-    font-size:16px;
-    opacity:.95;
-}
+    header::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(15,23,42,.45),rgba(15,23,42,.96));
+      mix-blend-mode:multiply;
+      pointer-events:none;
+    }
 
-/* CONTAINER */
-.container{
-    max-width:1000px;
-    margin:-50px auto 0;
-    padding:20px;
-}
+    .header-inner{
+      position:relative;
+      max-width:880px;
+      margin:auto;
+    }
 
-/* OPTIONS */
-.options{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:26px;
-}
+    header h1{
+      margin:0 0 10px;
+      font-size:34px;
+      letter-spacing:.03em;
+    }
 
-/* CARD */
-.card{
-    background:#fff;
-    border-radius:20px;
-    box-shadow:0 14px 35px rgba(0,0,0,.18);
-    overflow:hidden;
-    text-align:center;
-    transition:.25s;
-}
+    header h1 span{
+      color:#fed7aa;
+    }
 
-.card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 18px 40px rgba(0,0,0,.28);
-}
+    header p{
+      margin-top:6px;
+      font-size:14px;
+      opacity:.9;
+      color:#e5e7eb;
+    }
 
-.card img{
-    width:100%;
-    height:210px;
-    object-fit:cover;
-}
+    .header-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:4px 11px;
+      border-radius:999px;
+      background:rgba(15,23,42,.86);
+      border:1px solid rgba(252,165,165,.6);
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:#fecaca;
+      margin-bottom:12px;
+    }
 
-.card-body{
-    padding:26px 22px;
-}
+    .header-tag span{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#f97316;
+      box-shadow:0 0 12px rgba(248,113,113,.95);
+    }
 
-.card h2{
-    margin:0;
-    font-size:22px;
-}
+    /* CONTAINER */
+    .container{
+      max-width:1000px;
+      margin:-50px auto 0;
+      padding:0 18px 30px;
+      position:relative;
+      z-index:1;
+    }
 
-.card p{
-    font-size:14px;
-    color:#666;
-    margin:12px 0 18px;
-}
+    /* OPTIONS */
+    .options{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+    }
 
-/* BUTTONS */
-.btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:15px 22px;
-    border-radius:14px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:16px;
-    color:#fff;
-    min-width:200px;
-}
+    /* CARD */
+    .card{
+      background:var(--surface);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 22px 55px rgba(15,23,42,.8);
+      border:1px solid rgba(31,41,55,.9);
+      display:flex;
+      flex-direction:column;
+      transition:transform .22s ease,box-shadow .22s ease,border-color .2s ease;
+    }
 
-.btn-menu{
-    background:linear-gradient(135deg,#c0392b,#e74c3c);
-}
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 26px 70px rgba(0,0,0,.9);
+      border-color:rgba(251,146,60,.85);
+    }
 
-.btn-table{
-    background:linear-gradient(135deg,#2980b9,#3498db);
-}
+    .card img{
+      width:100%;
+      height:210px;
+      object-fit:cover;
+      display:block;
+    }
 
-/* BACK */
-.back{
-    display:block;
-    text-align:center;
-    margin:30px 0;
-    color:#555;
-    text-decoration:none;
-    font-size:14px;
-}
+    .card-body{
+      padding:22px 20px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1;
+    }
 
-/* FOOTER */
-.footer{
-    background:#111;
-    color:#ccc;
-    margin-top:60px;
-}
+    .chip{
+      align-self:flex-start;
+      padding:4px 10px;
+      font-size:11px;
+      border-radius:999px;
+      background:rgba(31,41,55,1);
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.16em;
+    }
 
-.footer-container{
-    max-width:1100px;
-    margin:auto;
-    padding:40px 20px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:24px;
-}
+    .card h2{
+      margin:0;
+      font-size:20px;
+      color:var(--text);
+    }
 
-.footer h3{
-    color:#27ae60;
-    font-size:16px;
-    margin-top:0;
-}
+    .card p{
+      font-size:13px;
+      color:var(--muted);
+      margin:2px 0 8px;
+    }
 
-.footer a{
-    color:#ccc;
-    text-decoration:none;
-    font-size:14px;
-}
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
 
-.footer a:hover{color:#27ae60}
+    .meta-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#020617;
+      border:1px solid rgba(55,65,81,.9);
+    }
 
-.map-btn{
-    display:inline-block;
-    margin-top:10px;
-    padding:10px 14px;
-    background:#27ae60;
-    color:#fff !important;
-    border-radius:8px;
-}
+    .meta-pill span{
+      font-size:14px;
+    }
 
-.footer-bottom{
-    text-align:center;
-    background:#000;
-    padding:14px;
-    font-size:13px;
-    color:#888;
-}
+    /* BUTTONS */
+    .btn{
+      margin-top:8px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 18px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:500;
+      font-size:14px;
+      color:#0b1120;
+      min-width:180px;
+      border:none;
+      cursor:pointer;
+      transition:transform .15s ease,box-shadow .15s ease,filter .15s ease;
+      align-self:flex-start;
+    }
 
-/* WHATSAPP FLOAT */
-.whatsapp-float{
-    position:fixed;
-    bottom:22px;
-    right:20px;
-    width:56px;
-    height:56px;
-    background:#25d366;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:28px;
-    text-decoration:none;
-    box-shadow:0 8px 20px rgba(0,0,0,.35);
-    z-index:999;
-}
-</style>
+    .btn-menu{
+      background:linear-gradient(135deg,#fb923c,#ef4444);
+      box-shadow:0 16px 35px rgba(248,113,113,.55);
+      color:#111827;
+    }
+
+    .btn-menu:hover{
+      transform:translateY(-1px);
+      box-shadow:0 22px 55px rgba(248,113,113,.8);
+      filter:brightness(1.03);
+    }
+
+    .btn-table{
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      box-shadow:0 16px 35px rgba(34,197,94,.6);
+    }
+
+    .btn-table:hover{
+      transform:translateY(-1px);
+      box-shadow:0 22px 55px rgba(34,197,94,.8);
+      filter:brightness(1.03);
+    }
+
+    /* BACK LINK */
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin:26px 0 0;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:13px;
+    }
+
+    .back:hover{
+      color:#e5e7eb;
+    }
+
+    /* FOOTER */
+    .footer{
+      background:#020617;
+      color:var(--muted);
+      margin-top:56px;
+      border-top:1px solid rgba(31,41,55,1);
+    }
+
+    .footer-container{
+      max-width:1100px;
+      margin:auto;
+      padding:28px 18px 30px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:22px;
+      font-size:13px;
+    }
+
+    .footer h3{
+      color:#e5e7eb;
+      font-size:14px;
+      margin-top:0;
+      margin-bottom:8px;
+      font-weight:500;
+    }
+
+    .footer p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .footer a{
+      color:#e5e7eb;
+      text-decoration:none;
+      font-size:13px;
+    }
+
+    .footer a:hover{
+      color:#a5b4fc;
+    }
+
+    .map-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      margin-top:8px;
+      padding:9px 14px;
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      color:#e5e7eb !important;
+      border-radius:999px;
+      font-size:12px;
+      text-decoration:none;
+      border:none;
+      cursor:pointer;
+    }
+
+    .footer-bottom{
+      text-align:center;
+      background:#000;
+      padding:14px 18px 18px;
+      font-size:12px;
+      color:#4b5563;
+      border-top:1px solid rgba(31,41,55,1);
+    }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float{
+      position:fixed;
+      bottom:20px;
+      right:18px;
+      width:52px;
+      height:52px;
+      background:#22c55e;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#022c22;
+      font-size:24px;
+      text-decoration:none;
+      box-shadow:0 18px 40px rgba(22,163,74,.75);
+      z-index:999;
+      transition:.15s ease;
+    }
+
+    .whatsapp-float:hover{
+      transform:translateY(-2px) scale(1.03);
+      box-shadow:0 24px 55px rgba(22,163,74,.85);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:640px){
+      header{
+        padding:70px 16px 60px;
+      }
+      header h1{
+        font-size:28px;
+      }
+      .card img{
+        height:190px;
+      }
+      .container{
+        margin-top:-40px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-<header>
-    <h1>🍽 Restaurant</h1>
-    <p>Order delicious food or reserve a table</p>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="header-tag">
+        <span></span>
+        DINE · TAKEAWAY · DELIVERY
+      </div>
+      <h1>🍽 ABC <span>Restaurant</span></h1>
+      <p>Order your favourites or reserve a cozy table with your family in just a few taps.</p>
+    </div>
+  </header>
 
-<!-- OPTIONS -->
-<div class="container">
+  <!-- OPTIONS -->
+  <div class="container">
     <div class="options">
 
-        <!-- MENU -->
-        <div class="card">
-            <img src="images/dish1.jpg" alt="Restaurant Menu">
-            <div class="card-body">
-                <h2>Menu & Online Order</h2>
-                <p>Browse dishes, add to cart and place your order</p>
-                <a href="restaurant.html" class="btn btn-menu">
-                    View Menu
-                </a>
-            </div>
-        </div>
+      <!-- MENU -->
+      <div class="card">
+        <img src="images/dish1.jpg" alt="Restaurant Menu" />
+        <div class="card-body">
+          <div class="chip">Online menu</div>
+          <h2>Menu &amp; Online Order</h2>
+          <p>Browse curated dishes, add items to your cart, and place an order for takeaway or home delivery.</p>
 
-        <!-- TABLE BOOKING -->
-        <div class="card">
-            <img src="images/restaurant.jpg" alt="Table Booking">
-            <div class="card-body">
-                <h2>Table Reservation</h2>
-                <p>Reserve a table for dine-in with your family</p>
-                <a href="table_booking.html" class="btn btn-table">
-                    Book a Table
-                </a>
+          <div class="meta-row">
+            <div class="meta-pill">
+              <span>🔥</span> Chef specials daily
             </div>
+            <div class="meta-pill">
+              <span>⏰</span> 30–45 min delivery
+            </div>
+          </div>
+
+          <a href="restaurant.html" class="btn btn-menu">
+            View Menu &amp; Order
+          </a>
         </div>
+      </div>
+
+      <!-- TABLE BOOKING -->
+      <div class="card">
+        <img src="images/restaurant.jpg" alt="Table Booking" />
+        <div class="card-body">
+          <div class="chip">Dine‑in</div>
+          <h2>Table Reservation</h2>
+          <p>Pick a date, time and guest count to reserve your table for celebrations or casual dining.</p>
+
+          <div class="meta-row">
+            <div class="meta-pill">
+              <span>👨‍👩‍👧‍👦</span> Family‑friendly seating
+            </div>
+            <div class="meta-pill">
+              <span>⭐</span> Priority check‑in
+            </div>
+          </div>
+
+          <a href="table_booking.html" class="btn btn-table">
+            Book a Table
+          </a>
+        </div>
+      </div>
 
     </div>
 
-    <a href="index.html" class="back">⬅ Back to Home</a>
-</div>
+    <a href="index.html" class="back">
+      ⬅ Back to Home
+    </a>
+  </div>
 
-<!-- FOOTER -->
-<footer class="footer">
+  <!-- FOOTER -->
+  <footer class="footer">
     <div class="footer-container">
 
-        <div>
-            <h3>Address</h3>
-            <p>
-                ABC Restaurant & Resort<br>
-                Beach Road, Visakhapatnam
-            </p>
-        </div>
+      <div>
+        <h3>Address</h3>
+        <p>
+          ABC Restaurant &amp; Resort<br />
+          Beach Road, Visakhapatnam
+        </p>
+      </div>
 
-        <div>
-            <h3>Contact</h3>
-            <p>
-                <a href="tel:9876543210">+91 98765 43210</a><br>
-                <a href="https://wa.me/919876543210" target="_blank">WhatsApp Chat</a>
-            </p>
-        </div>
+      <div>
+        <h3>Contact</h3>
+        <p>
+          <a href="tel:9876543210">+91 98765 43210</a><br />
+          <a href="https://wa.me/919876543210" target="_blank">WhatsApp Chat</a>
+        </p>
+      </div>
 
-        <div>
-            <h3>Location</h3>
-            <a class="map-btn"
-               href="https://www.google.com/maps?q=Visakhapatnam"
-               target="_blank">
-               View on Google Maps
-            </a>
-        </div>
+      <div>
+        <h3>Location</h3>
+        <a class="map-btn" href="https://www.google.com/maps?q=Visakhapatnam" target="_blank">
+          📍 View on Google Maps
+        </a>
+      </div>
 
     </div>
 
     <div class="footer-bottom">
-        © 2025 ABC Restaurant & Resort. All rights reserved.
+      © 2025 ABC Restaurant &amp; Resort. All rights reserved.
     </div>
-</footer>
+  </footer>
 
-<!-- WHATSAPP -->
-<a href="https://wa.me/919876543210"
-   class="whatsapp-float"
-   target="_blank">💬</a>
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">💬</a>
 
 </body>
 </html>
